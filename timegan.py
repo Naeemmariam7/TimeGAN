@@ -50,7 +50,7 @@ def timegan (ori_data, parameters):
   #signal_length = data.shape[1]
   #num_signals = data.shape[2]
   # reshape everything
-  train_r = ori_data.reshape(-1, seq_len * dim)
+  train_r = np.asarray(ori_data).reshape(-1, seq_len * dim)
   # fit scaler using train, vali
   scaler = MinMaxScaler(feature_range=(-1, 1)).fit(train_r)
 
