@@ -50,17 +50,19 @@ def timegan (ori_data, parameters):
   #signal_length = data.shape[1]
   #num_signals = data.shape[2]
   # reshape everything
-  ori_data2 = np.asarray(ori_data)
-  train_r = ori_data2.reshape(-1, seq_len * dim)
+  #ori_data2 = np.asarray(ori_data)
+  
+  
+  #train_r = ori_data2.reshape(-1, seq_len * dim)
   # fit scaler using train, vali
-  scaler = MinMaxScaler(feature_range=(-1, 1)).fit(train_r)
+  #scaler = MinMaxScaler(feature_range=(-1, 1)).fit(train_r)
 
   def MinMaxScaler(data):
 
     # scale everything
-    norm_data = scaler.transform(train_r).reshape(-1, seq_len, dim)
-
-    return norm_data
+ #   norm_data = scaler.transform(train_r).reshape(-1, seq_len, dim)
+#
+  #  return norm_data
   
     """Min-Max Normalizer.
 
@@ -72,18 +74,17 @@ def timegan (ori_data, parameters):
       - min_val: minimum values (for renormalization)
       - max_val: maximum values (for renormalization)
     """
-    # min_val = np.min(np.min(data, axis = 0), axis = 0)
-    # data = data - min_val
+     min_val = np.min(np.min(data, axis = 0), axis = 0)
+     data = data - min_val
+     max_val = np.max(np.max(data, axis = 0), axis = 0)
+     norm_data = data / (max_val + 1e-7)
 
-    # max_val = np.max(np.max(data, axis = 0), axis = 0)
-    # norm_data = data / (max_val + 1e-7)
-
-    # return norm_data, min_val, max_val
+     return norm_data, min_val, max_val
 
     # Normalization
-    # ori_data, min_val, max_val = MinMaxScaler(ori_data)
+     ori_data, min_val, max_val = MinMaxScaler(ori_data)
 
-  ori_data = MinMaxScaler(ori_data)
+  #ori_data = MinMaxScaler(ori_data)
               
   ## Build a RNN networks          
   
@@ -335,8 +336,8 @@ def timegan (ori_data, parameters):
     temp = generated_data_curr[i,:ori_time[i],:]
     generated_data.append(temp)
         
-  generated_data = scaler.inverse_transform(generated_data)
-    # generated_data = generated_data * max_val
-    # generated_data = generated_data + min_val
+  #generated_data = scaler.inverse_transform(generated_data)
+     generated_data = generated_data * max_val
+     generated_data = generated_data + min_val
     
   return generated_data
