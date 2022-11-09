@@ -13,7 +13,6 @@ Code author: Jinsung Yoon (jsyoon0823@gmail.com)
 
 main_timegan.py
 
-(1) Import data
 (2) Generate synthetic data
 (3) Evaluate the performances in three ways
   - Visualization (t-SNE, PCA)
